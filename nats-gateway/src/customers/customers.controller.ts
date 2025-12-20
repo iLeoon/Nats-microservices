@@ -19,30 +19,33 @@ import { JwtAuthGuard } from 'src/guards/jwt.guard';
 export class CustomersController {
   constructor(
     @Inject('NATS_SERVICE') private readonly clientProxy: ClientProxy,
-  ) {}
+  ) { }
 
   @Get('findAll')
   getCustomers() {
-    return this.clientProxy.send('findCustomers', '');
+    return this.clientProxy.send('customers.findCustomers', '');
   }
 
   @Get(':id')
   getCustomer(@Param('id') id: string) {
-    return this.clientProxy.send('findCustomer', id);
+    return this.clientProxy.send('customers.findCustomer', id);
   }
 
   @Post('create')
   createCustomer(@Body() createCustomerDto: CreateCustomerDto) {
-    return this.clientProxy.send('createCustomer', createCustomerDto);
+    return this.clientProxy.send('customers.createCustomer', createCustomerDto);
   }
 
   @Patch('update/:id')
   updateCustomer(@Body() data: UpdateCustomerDto, @Param('id') id: string) {
-    return this.clientProxy.send('updateCustomer', { customer: data, id });
+    return this.clientProxy.send('customers.updateCustomer', {
+      customer: data,
+      id,
+    });
   }
 
   @Delete('delete/:id')
   deleteCustomer() {
-    return this.clientProxy.send('deleteCustomer', '');
+    return this.clientProxy.send('customers.deleteCustomer', '');
   }
 }

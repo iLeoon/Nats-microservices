@@ -19,21 +19,21 @@ import { JwtAuthGuard } from 'src/guards/jwt.guard';
 export class ProductsController {
   constructor(
     @Inject('NATS_SERVICE') private readonly clientProxy: ClientProxy,
-  ) {}
+  ) { }
 
   @Post('create')
   create(@Body() createProductDto: CreateProductDto) {
-    return this.clientProxy.send('createProduct', createProductDto);
+    return this.clientProxy.send('products.createProduct', createProductDto);
   }
 
   @Get('findAll')
   findAll() {
-    return this.clientProxy.send('findAllProducts', '');
+    return this.clientProxy.send('products.findAllProducts', '');
   }
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.clientProxy.send('findOneProduct', id);
+    return this.clientProxy.send('products.findOneProduct', id);
   }
 
   @Patch(':id')
@@ -41,6 +41,9 @@ export class ProductsController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateProductDto: UpdateProductDto,
   ) {
-    return this.clientProxy.send('updateProduct', { id, updateProductDto });
+    return this.clientProxy.send('products.updateProduct', {
+      id,
+      updateProductDto,
+    });
   }
 }

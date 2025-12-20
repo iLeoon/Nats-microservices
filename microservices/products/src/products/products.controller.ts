@@ -6,26 +6,26 @@ import { updateProductPayload } from './payload';
 
 @Controller()
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService) { }
 
-  @MessagePattern('createProduct')
+  @MessagePattern('products.createProduct')
   async create(@Payload() createProductDto: CreateProductDto) {
     console.log(createProductDto);
     return await this.productsService.create(createProductDto);
   }
 
-  @MessagePattern('findAllProducts')
+  @MessagePattern('products.findAllProducts')
   async findAll() {
     return await this.productsService.findAll();
   }
 
-  @MessagePattern('findOneProduct')
+  @MessagePattern('products.findOneProduct')
   findOne(@Payload() id: number) {
     console.log(id);
     return this.productsService.findOne(id);
   }
 
-  @MessagePattern('updateProduct')
+  @MessagePattern('products.updateProduct')
   async update(@Payload() { id, updateProductDto }: updateProductPayload) {
     return await this.productsService.update(id, updateProductDto);
   }

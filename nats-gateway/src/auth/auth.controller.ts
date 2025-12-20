@@ -8,11 +8,11 @@ import { Response } from 'express';
 export class AuthController {
   constructor(
     @Inject('NATS_SERVICE') private readonly clientProxy: ClientProxy,
-  ) {}
+  ) { }
 
   @Post('login')
   login(@Body() body: LoginDto, @Res() res: Response) {
-    return this.clientProxy.send('LoginUser', body).subscribe({
+    return this.clientProxy.send('auth.loginUser', body).subscribe({
       next: (response) => {
         const { context, message } = response;
         if (context) {
@@ -28,7 +28,7 @@ export class AuthController {
 
   @Post('register')
   register(@Body() body: RegisterDto, @Res() res: Response) {
-    return this.clientProxy.send('RegisterUser', body).subscribe({
+    return this.clientProxy.send('auth.registerUser', body).subscribe({
       next: (response) => {
         return res.status(200).send(response);
       },

@@ -10,7 +10,7 @@ import (
 )
 
 func LoginUser(nc *nats.Conn, s service.AuthService) {
-	nc.Subscribe("LoginUser", func(msg *nats.Msg) {
+	nc.Subscribe("auth.loginUser", func(msg *nats.Msg) {
 		var payload models.LoginUserPayload
 		err := json.Unmarshal(msg.Data, &payload)
 
@@ -30,7 +30,7 @@ func LoginUser(nc *nats.Conn, s service.AuthService) {
 }
 
 func RegisterUser(nc *nats.Conn, s service.AuthService) {
-	nc.Subscribe("RegisterUser", func(msg *nats.Msg) {
+	nc.Subscribe("auth.registerUser", func(msg *nats.Msg) {
 
 		var payload models.CreateUserPayload
 		err := json.Unmarshal(msg.Data, &payload)

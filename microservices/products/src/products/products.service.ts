@@ -10,7 +10,7 @@ export class ProductsService {
   constructor(
     @InjectRepository(Product, 'PostgresQl')
     private readonly productRepo: Repository<Product>,
-  ) {}
+  ) { }
   async create(createProductDto: CreateProductDto) {
     const product = await this.productRepo.create(createProductDto);
     await this.productRepo.save(product);

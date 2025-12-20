@@ -13,7 +13,7 @@ import (
 
 func GetAllCustomers(nc *nats.Conn, s service.CustomerService) {
 
-	nc.Subscribe("findCustomers", func(msg *nats.Msg) {
+	nc.Subscribe("customers.findCustomers", func(msg *nats.Msg) {
 		customers, err := s.FetchCustomers()
 
 		if err != nil {
@@ -30,7 +30,7 @@ func GetAllCustomers(nc *nats.Conn, s service.CustomerService) {
 
 func GetCustomer(nc *nats.Conn, s service.CustomerService) {
 
-	nc.Subscribe("findCustomer", func(msg *nats.Msg) {
+	nc.Subscribe("customers.findCustomer", func(msg *nats.Msg) {
 		var payload models.Payload
 		err := json.Unmarshal(msg.Data, &payload)
 
@@ -52,7 +52,7 @@ func GetCustomer(nc *nats.Conn, s service.CustomerService) {
 }
 
 func CreateCustomer(nc *nats.Conn, s service.CustomerService) {
-	nc.Subscribe("createCustomer", func(msg *nats.Msg) {
+	nc.Subscribe("customers.createCustomer", func(msg *nats.Msg) {
 		var payload models.CreateCustomerPayload
 		err := json.Unmarshal(msg.Data, &payload)
 
@@ -72,7 +72,7 @@ func CreateCustomer(nc *nats.Conn, s service.CustomerService) {
 }
 
 func UpdateCustomer(nc *nats.Conn, s service.CustomerService) {
-	nc.Subscribe("updateCustomer", func(msg *nats.Msg) {
+	nc.Subscribe("customers.updateCustomer", func(msg *nats.Msg) {
 		var payload models.UpdateCustomerPayload
 
 		err := json.Unmarshal(msg.Data, &payload)
