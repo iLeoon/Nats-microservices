@@ -63,6 +63,6 @@ These subjects define the **public contract** of the Products service.
 
 ```bash
 yarn install
-yarn run start:dev
+yarn start:dev
 ```
 

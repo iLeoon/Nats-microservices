@@ -37,12 +37,12 @@ The system is designed with clear service boundaries, independent deployments, a
 
 ## 🧩 Services Overview
 
-| Service            | Language | Responsibility |
-|--------------------|----------|----------------|
-| **Gateway**        | NestJS   | HTTP entry point, JWT validation, request routing, and translation to NATS RPC |
-| **Authentication** | Go       | User authentication and identity management |
-| **Customers**      | Go       | Customer data and operations |
-| **Products**       | NestJS   | Product management and operations |
+| Service | Language | Responsibility |
+|--------|----------|----------------|
+| [**Gateway**](./nats-gateway/README.md) | NestJS | HTTP entry point, JWT validation, request routing, and translation to NATS RPC |
+| [**Authentication**](./microservices/auth/README.md) | Go | User authentication and identity management |
+| [**Customers**](./microservices/customers/README.md) | Go | Customer data and operations |
+| [**Products**](./microservices/products/README.md) | NestJS | Product management and operations |
 
 ---
 
