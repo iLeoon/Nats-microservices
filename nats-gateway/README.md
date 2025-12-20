@@ -36,11 +36,7 @@ It delegates all domain operations to internal services via NATS.
 
 ## 🧩 Routing Model
 
-Client
-↓ HTTP
-API Gateway (NestJS)
-↓ NATS RPC
-Internal Services
+Client -> HTTP -> API Gateway (NestJS) -> NATS RPC -> Internal Services
 
 
 Examples:
