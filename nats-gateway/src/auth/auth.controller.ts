@@ -8,7 +8,7 @@ import { Response } from 'express';
 export class AuthController {
   constructor(
     @Inject('NATS_SERVICE') private readonly clientProxy: ClientProxy,
-  ) { }
+  ) {}
 
   @Post('login')
   login(@Body() body: LoginDto, @Res() res: Response) {

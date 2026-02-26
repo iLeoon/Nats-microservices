@@ -103,27 +103,21 @@ func (r *Repository) Register(body models.CreateUserBody) *models.CustomeRespons
 		Password: string(hashPassword),
 	}
 
-	// handling if there is no user found in the database
-
+	// Check if user already exists
 	databseUser := users.FindOne(ctx, query)
-	if err := databseUser.Err(); err != nil {
-		fmt.Println("There is no user found with that email")
-	}
-
-	existingUser := &models.CreateUserBody{}
-
-	databseUser.Decode(existingUser)
-
-	if existingUser.Email == body.Email {
-		return &models.CustomeResponse{
-			Msg:     "This user with the current email already exists!",
-			Context: false,
+	if err := databseUser.Err(); err == nil {
+		existingUser := &models.CreateUserBody{}
+		if err := databseUser.Decode(existingUser); err == nil {
+			if existingUser.Email == body.Email {
+				return &models.CustomeResponse{
+					Msg:     "This user with the current email already exists!",
+					Context: false,
+				}
+			}
 		}
 	}
 
 	insertedUser, err := users.InsertOne(ctx, requestBody)
-
-	users.FindOne(ctx, bson.D{{Key: "_id", Value: insertedUser.InsertedID}})
 
 	if err != nil {
 		fmt.Println(err)
@@ -134,7 +128,7 @@ func (r *Repository) Register(body models.CreateUserBody) *models.CustomeRespons
 	}
 
 	return &models.CustomeResponse{
-		Msg:     "Created the new user",
+		Msg:     "Created the new user with ID " + insertedUser.InsertedID.(primitive.ObjectID).Hex(),
 		Context: true,
 	}
 }

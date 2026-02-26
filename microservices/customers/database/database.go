@@ -7,6 +7,7 @@ import (
 	_ "github.com/lib/pq"
 	"log"
 	"os"
+	"strconv"
 )
 
 func Connect() (*sql.DB, error) {
@@ -15,7 +16,11 @@ func Connect() (*sql.DB, error) {
 	}
 
 	host := os.Getenv("DATABASE_HOST")
-	port := 5432
+	portStr := os.Getenv("DATABASE_PORT")
+	port, err := strconv.Atoi(portStr)
+	if err != nil || port == 0 {
+		port = 5432
+	}
 	user := os.Getenv("DATABASE_USER")
 	password := os.Getenv("DATABASE_PASSWORD")
 	dbname := os.Getenv("DATABASE_NAME")

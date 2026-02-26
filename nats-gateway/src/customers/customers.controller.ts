@@ -19,7 +19,7 @@ import { JwtAuthGuard } from 'src/guards/jwt.guard';
 export class CustomersController {
   constructor(
     @Inject('NATS_SERVICE') private readonly clientProxy: ClientProxy,
-  ) { }
+  ) {}
 
   @Get('findAll')
   getCustomers() {

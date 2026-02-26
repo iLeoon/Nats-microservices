@@ -15,8 +15,10 @@ export class ProductsController {
   }
 
   @MessagePattern('products.findAllProducts')
-  async findAll() {
-    return await this.productsService.findAll();
+  async findAll(@Payload() query: { page?: number; limit?: number }) {
+    const page = Number(query?.page) || 1;
+    const limit = Number(query?.limit) || 20;
+    return await this.productsService.findAll(page, limit);
   }
 
   @MessagePattern('products.findOneProduct')

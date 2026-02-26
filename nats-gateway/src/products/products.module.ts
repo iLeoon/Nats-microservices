@@ -10,6 +10,9 @@ import { ProductsController } from './products.controller';
         transport: Transport.NATS,
         options: {
           servers: process.env.NATS_SERVER,
+          timeout: 5000,
+          maxReconnectAttempts: 3,
+          reconnectTimeWait: 100,
         },
       },
     ]),

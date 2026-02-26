@@ -16,3 +16,6 @@ async function bootstrap() {
   await app.listen();
 }
 bootstrap();
+
+// Keep process alive (NATS microservice event loop guard)
+setInterval(() => {}, 1000);

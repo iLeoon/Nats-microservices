@@ -17,8 +17,13 @@ export class ProductsService {
     return product;
   }
 
-  async findAll() {
-    return await this.productRepo.find();
+  async findAll(page = 1, limit = 20) {
+    const [data, total] = await this.productRepo.findAndCount({
+      take: limit,
+      skip: (page - 1) * limit,
+      order: { product_id: 'ASC' },
+    });
+    return { data, total, page, limit, pages: Math.ceil(total / limit) };
   }
 
   async findOne(id: number) {

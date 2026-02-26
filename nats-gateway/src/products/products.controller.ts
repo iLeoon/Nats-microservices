@@ -8,6 +8,8 @@ import {
   Inject,
   ParseIntPipe,
   UseGuards,
+  Query,
+  DefaultValuePipe,
 } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -19,7 +21,7 @@ import { JwtAuthGuard } from 'src/guards/jwt.guard';
 export class ProductsController {
   constructor(
     @Inject('NATS_SERVICE') private readonly clientProxy: ClientProxy,
-  ) { }
+  ) {}
 
   @Post('create')
   create(@Body() createProductDto: CreateProductDto) {
@@ -27,8 +29,11 @@ export class ProductsController {
   }
 
   @Get('findAll')
-  findAll() {
-    return this.clientProxy.send('products.findAllProducts', '');
+  findAll(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(20), ParseIntPipe) limit: number,
+  ) {
+    return this.clientProxy.send('products.findAllProducts', { page, limit });
   }
 
   @Get(':id')

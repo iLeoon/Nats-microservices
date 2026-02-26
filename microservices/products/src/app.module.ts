@@ -17,6 +17,11 @@ import { ConfigModule } from '@nestjs/config';
       database: process.env.DATABASE_NAME,
       entities: [Product],
       synchronize: false,
+      extra: {
+        max: 20,                // pool size (default was 10)
+        idleTimeoutMillis: 30000,
+        connectionTimeoutMillis: 2000,
+      },
     }),
     ProductsModule,
   ],

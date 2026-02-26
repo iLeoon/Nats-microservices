@@ -11,7 +11,7 @@ import { JwtAuthGuard } from 'src/guards/jwt.guard';
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET_KEY,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '1h' },
     }),
 
     ClientsModule.register([
@@ -20,6 +20,9 @@ import { JwtAuthGuard } from 'src/guards/jwt.guard';
         transport: Transport.NATS,
         options: {
           servers: process.env.NATS_SERVER,
+          timeout: 5000,
+          maxReconnectAttempts: 3,
+          reconnectTimeWait: 100,
         },
       },
     ]),
